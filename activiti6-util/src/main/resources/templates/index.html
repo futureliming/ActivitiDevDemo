@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>流程界面</title>
+<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<h1>dsfd</h1>
+<h2>
+	<a href='/create?name=activiti&amp;key=123456'>绘制流程</a>
+</h2>
+<div>
+	<table width="100%">
+	    <tr>
+	        <td width="10%">模型编号</td>
+	        <td width="10%">版本</td>
+	        <td width="20%">模型名称</td>
+	        <td width="20%">模型key</td>
+	        <td width="40%">操作</td>
+	    </tr>
+	        <tr th:each="model:${modelList}">
+	            <td width="10%" th:text="${model.id}"></td>
+	            <td width="10%" th:text="${model.version}"></td>
+	            <td width="20%" th:text="${model.name}"></td>
+	            <td width="20%" th:text="${model.key}"></td>
+	            <td width="40%">
+	             <a th:href="@{'/editor?modelId='+${model.id}}" >编辑</a>
+	             <a th:href="@{'/publish?modelId='+${model.id}}">发布</a>
+	             <a th:href="@{'/revokePublish?modelId='+${model.id}}">撤销</a>
+	             <a th:href="@{'/delete?modelId='+${model.id}}">删除</a>
+	             <a th:href="@{'/deleteProcessModel?modelId='+${model.id}}">删除模型</a>
+	            </td>
+	        </tr>
+
+	</table>
+</div>
+</body>
+</html>
+
+<style>
+body{
+	margin:10px 10px 100px 10px;
+}
+* {
+	font-family: "微软雅黑";
+	font-size: 15px;
+}
+
+td {
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+}
+
+button {
+	padding: 5px;
+	margin: 5px 0;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+}
+
+.log {
+	float: right;
+	padding: 5px 8px;
+	background: #ec5757;
+	color: #fff;
+}
+</style>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" ></script>
+<script
+	src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>

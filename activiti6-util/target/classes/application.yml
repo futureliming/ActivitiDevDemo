@@ -1,0 +1,38 @@
+server:
+  session:
+    timeout: 3600
+  port: 8081
+spring:
+  profiles:
+    active: dev
+  #数据源配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://120.79.195.71:3306/activiti_util?useUnicode=true&useSSL=false&characterEncoding=utf-8&allowMultiQueries=true
+    username: cloudmysql1
+    password: XueFengMySql-1
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+#    LEGACYHTML5     //代表不进行严格检验
+    encoding: UTF-8
+    content-type: text/html; charset=utf-8
+    cache: true
+
+  http:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+    activiti:
+      check-process-definitions: false
+  jpa:
+    show-sql: true
+logging:
+  level:
+    org:
+      activiti:
+        engine:
+          impl:
+            persistence:
+              entity: trace

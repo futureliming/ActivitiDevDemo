@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="test06" name="二级审批" isExecutable="true" isClosed="false" processType="None">
+    <extensionElements>
+      <activiti:formProperty xmlns:activiti="http://activiti.org/bpmn" id="message" name="信息" type="string" required="true"></activiti:formProperty>
+    </extensionElements>
+    <startEvent id="startEvent" name="开始" activiti:formKey="/rest/process/form/start"></startEvent>
+    <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="myTask"></sequenceFlow>
+    <userTask id="myTask" name="my-task" activiti:candidateUsers="yubuyun" activiti:formKey="/rest/process/form/userTask">
+      <extensionElements>
+        <activiti:formProperty id="yesOrNo" name="审批" type="string" required="true"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow2" sourceRef="myTask" targetRef="endEvent"></sequenceFlow>
+    <endEvent id="endEvent" name="取消"></endEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_test06">
+    <bpmndi:BPMNPlane bpmnElement="test06" id="BPMNPlane_test06">
+      <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
+        <omgdc:Bounds height="35.0" width="35.0" x="150.0" y="222.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="myTask" id="BPMNShape_myTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="300.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endEvent" id="BPMNShape_endEvent">
+        <omgdc:Bounds height="35.0" width="35.0" x="500.0" y="222.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="185.0" y="239.0"></omgdi:waypoint>
+        <omgdi:waypoint x="244.0" y="239.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="240.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="400.0" y="240.0"></omgdi:waypoint>
+        <omgdi:waypoint x="500.0" y="239.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

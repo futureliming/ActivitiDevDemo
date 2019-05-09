@@ -1,0 +1,39 @@
+test02.bpmn
+各步骤已经设置任务办理人，所以不需要claim，assignee
+
+启动流程
+/t02/runProcessT2
+
+开始一个流程实例
+/t02/startProcessIns
+获取流程实例信息
+
+/t02/getHiInfo
+这时候可以看到流程实例已经启动，第一步骤启动，办理人001
+查看act_hi_taskinst ，（通过 act_hi_actinst也可以查看）该步骤还没有完成
+
+/t02/taskComplete
+任务完成指令
+查看act_hi_taskinst 该第一步骤完成，办理人001
+开启第二步，还没有完成,办理人002
+开发中，这里可以通过验证是否是办理人，只有办理人才能操作
+
+/t02/getHiInfo
+这时候可以看到流程实例已经启动，走了一步，具有两条数据，办理人002
+查看act_hi_taskinst 第一步已经完成，新步骤还没有完成
+
+/t02/taskComplete
+任务完成指令
+查看act_hi_taskinst 该第一步骤完成，办理人002
+开启第3步，还没有完成,办理人003
+开发中，这里可以通过验证是否是办理人，只有办理人才能操作
+
+/t02/getHiInfo
+这时候可以看到流程实例已经启动，走了一步，具有3条数据，办理人002
+查看act_hi_taskinst 最后一步骤还没有完成
+
+/t02/taskComplete
+任务完成指令
+查看act_hi_taskinst 该第一步骤完成，办理人003
+开发中，这里可以通过验证是否是办理人，只有办理人才能操作
+act_hi_actinst也可以查看 从start到end所有步骤都完成,act_ru_task 删除该信息以及删除各配置信息，任务完成

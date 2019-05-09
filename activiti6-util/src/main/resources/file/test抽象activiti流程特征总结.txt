@@ -1,0 +1,70 @@
+ taskService.claim 签收人
+ ASSIGNEE_受理人
+ OWNER_委托人
+ act_hi_taskinst用户有关的任务流历史执行表(表明现在执行到哪一步了)
+ 表名:ACT_RU_TASK(运行时任务数据表)
+ 
+demo:myProcess，文件 test.bpmn
+用户：001（申请人），003（审核人）
+创建流程实例
+》填表单 
+》vacation_from 业务表插入，并获取id作为businessKey
+》设置variables ，在employee 中设置任务执行人也就是任务发起人
+》开始请假流程，使用formId作为流程的businessKey 锁定processDefinitionKey为测试流程名myProcess, 创建流程实例 instanceByKey，
+》信息返回页面显示（多余）
+》刷新主页
+
+请假人界面
+》vacation_from 业务表遍历id
+》用业务id 去遍历查询流程实例，getTaskByBusinessKey
+》返回加判断，如果不存在则判断为已经结束
+》cookie中获取用户名
+》申请者只能看到自己申请的请假单信息/遍历只留自己的实例流程
+》信息返回页面显示
+
+领导审核界面
+》管理员登录
+》进入请求homeApprover
+》vacation_from 业务表遍历id
+》用业务id 去遍历查询流程实例，getTaskByBusinessKey
+》审核者只能看到待审核状态的请假单/判断流程实例名是否为 "领导审核"
+》回显
+
+查询历史
+historyState
+》根据业务id获取历史记录 （自动转taskid》 historyid）/historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey
+》回显
+
+分支一
+y
+》input = apply，这里设置apply
+》分支处 ,使流程自动流转到对应节点 apply
+》通过业务id获取流程实例id
+》设置输入参数，使流程自动流转到对应节点taskService.setVariable ，带参input，apply
+》claim，complete，不带参variables/act_hi_taskinst新建的记录里面指定受理人并完成
+》获取所有具有审核权限的用户
+》设置variables.put("employee", operator);variables.put("managers", managers);
+》通过业务id获取流程实例id
+》设置当前用户001签收（claim） act_hi_taskinst新建的记录里面没有指定受理人，只有签收人
+》complete，带参variables  act_hi_taskinst新建的记录里面指定受理人并完成
+》刷新主页
+
+分支二
+n
+》input = giveup 这里设置 giveup
+》分支处 ,使流程自动流转到对应节点 giveup
+》通过业务id获取流程实例id
+》设置输入参数，使流程自动流转到对应节点taskService.setVariable ，带参input，giveup
+》claim，complete，不带参variables/act_hi_taskinst新建的记录里面指定受理人并完成
+》variables.put("employee", operator);
+》通过业务id获取流程实例id
+》设置当前用户001签收（claim） act_hi_taskinst新建的记录里面没有指定受理人，只有签收人
+》complete，带参variables  act_hi_taskinst新建的记录里面指定受理人并完成
+》刷新主页
+
+领导审核/approve
+》通过业务id获取流程实例id
+》设置当前用户003签收（claim） act_hi_taskinst新建的记录里面没有指定受理人，只有签收人
+》complete，不带参variables \完成
+》同步业务表操作人员
+》刷新主页

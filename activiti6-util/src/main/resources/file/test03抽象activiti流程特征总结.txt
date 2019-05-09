@@ -1,0 +1,36 @@
+采用test03.bpmn
+刚开始部署：
+Default sequenceflow has a condition, which is not allowed 报错
+那就不设置默认的网关选择flow
+
+/runProcessT3
+发布t3流程
+
+/startProcessIns
+启动一个流程实例
+流程启动，开始并启动第一步骤，第一步骤处理人预设，没有处理完成
+
+/findPersonalTaskList?userName=001
+查询用户001的个人任务10009
+
+/completeTask?taskId=10009&myMoney=1200 
+由于是网关，需要添加参数myMoney
+由于流程图里面variables设置的是key, 而代码里面是money。如：variables.put("money", myMoney); 
+报错：javax.el.PropertyNotFoundException: Cannot resolve identifier 'key'
+改正后正确执行
+完成任务，
+创建一个新的任务12504，由于我输入的值为1200，自动分配给usertask3任务
+
+/findPersonalTaskList?userName=001
+查询用户001的个人任务
+
+/taskRunInfo
+查询正在运行任务
+
+completeTask?taskId=12504&myMoney=0
+根据任务id确认完成任务，取消输入参数myMoney，
+任务12504完成，流程实例结束
+ct_hi_actinst也可以查看 从start到end所有步骤都完成,act_ru_task 删除该信息以及删除各配置信息，任务完成
+
+
+
