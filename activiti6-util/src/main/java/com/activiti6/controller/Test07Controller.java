@@ -13,6 +13,11 @@ import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+/**
+ * t07测试 - t07:包容网关例子
+ * @author Bruce
+ *
+ */
 @RestController
 @RequestMapping("/t07")
 public class Test07Controller {

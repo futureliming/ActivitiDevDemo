@@ -22,7 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activiti6.util.JWUtil;
-
+/**
+ * t05案例- t5:表单例子
+ * @author Bruce
+ *
+ */
 @RestController
 @RequestMapping("/t05")
 public class Test05Controller {

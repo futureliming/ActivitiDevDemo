@@ -26,7 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.activiti6.service.MiaoService;
 import com.activiti6.util.JWUtil;
 import com.activiti6.util.ResultInfo;
-
+/**
+ * t08测试 - t08:股权流程图例子
+ * @author Bruce
+ *
+ */
 @RestController
 @RequestMapping("/t08")
 public class Test08Controller {

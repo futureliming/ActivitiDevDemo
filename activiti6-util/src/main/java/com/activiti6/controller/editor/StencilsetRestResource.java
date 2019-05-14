@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.InputStream;
-/**
+/** activiti-model 6.0  bpmn编译器 版本（来自github activiti官方）
  * 获取编辑器组件及配置项信息
  * liuzhize 2019年3月7日下午3:33:28
  */

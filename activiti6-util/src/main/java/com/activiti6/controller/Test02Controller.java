@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.activiti6.util.JWUtil;
 /**
- * 流程test02测试
+ * 流程test02测试 - t02：简单无网关案例
 发布流程
 启动一个流程实例
 获取当前流程实例历史签收人

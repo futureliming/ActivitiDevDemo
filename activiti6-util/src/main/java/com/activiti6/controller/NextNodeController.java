@@ -34,7 +34,7 @@ import com.activiti6.service.VacationFormService;
 
 import de.odysseus.el.util.SimpleContext;
 
-/**
+/**通用化设计
  * 获取下一个节点
  * @author Bruce
  *

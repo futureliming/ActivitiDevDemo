@@ -1,5 +1,9 @@
 package com.activiti6.controller;
-
+/**
+ * 链表结构
+ * @author Bruce
+ *
+ */
 public class ActRuVariable {
 
 	public String getName() {

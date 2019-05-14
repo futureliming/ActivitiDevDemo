@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-/**
+/** * activiti-model 6.0  bpmn编译器 版本（来自github activiti官方）
  * 流程信息入库
  * liuzhize 2019年3月7日下午3:32:32
  */

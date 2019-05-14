@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * activiti 外部接口
+ * activiti 通用化 设计提供外部接口
  *
  * @author Bruce
  */

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.activiti6.util.JWUtil;
 /**
+ * t03案例 -t03:互斥网关案例
  * 部署配置流程图
 查询个人任务
 完成任务根据任务id

@@ -30,7 +30,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activiti6.util.JWUtil;
-
+/***
+ * t06案例 - t6: 表单案例
+ * @author Bruce
+ *
+ */
 @RestController
 @RequestMapping("/t06")
 public class Test06Controller {

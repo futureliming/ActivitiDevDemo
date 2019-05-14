@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
+ * activiti-model 6.0  bpmn编译器 版本（来自github activiti官方）
  * 获取model的节点信息，编辑器根据返回的json进行绘图
  * liuzhize 2019年3月7日下午3:29:15
  */
