@@ -30,9 +30,9 @@ spring:
     show-sql: true
 logging:
   level:
-    org:
-      activiti:
-        engine:
-          impl:
-            persistence:
-              entity: trace
+#    org:
+#      activiti:
+#        engine:
+#          impl:
+#            persistence:
+#              entity: trace

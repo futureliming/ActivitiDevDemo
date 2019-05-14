@@ -26,7 +26,10 @@ public class PageController {
 	public String login2(){
 		return "login";
 	}
-	
+	@GetMapping( "/t8")
+	public String t8(){
+		return "t8";
+	}
 	//申请者的首页
 	@GetMapping( "/home")
 	public String index(ModelMap model, HttpServletRequest request){

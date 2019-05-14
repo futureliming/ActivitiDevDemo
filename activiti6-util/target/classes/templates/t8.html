@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>t8界面</title>
+<link rel="stylesheet"
+	href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				<h1>activiti通用化设计测试案例08</h1>
+				<div class="row">
+					<div class="span12">
+						<div class="row">
+							<div class="span12">
+								<h3>当前部署的流程实例列表</h3>
+								<table class="table">
+									<thead>
+										<tr>
+											<th>编号</th>
+											<th>流程模型部署编号</th>
+											<th>开始时间</th>
+											<th>状态</th>
+										</tr>
+									</thead>
+									<tbody id="processInstsTable">
+										<tr>
+											<td>1</td>
+											<td>TB - Monthly</td>
+											<td>01/04/2012</td>
+											<td>Default</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<hr />
+						<div class="row">
+							<div class="span12">
+								<h3>选择用户，查看用户下有什么任务</h3>
+								<div class="btn-group">
+									<button class="btn">选择用户</button>
+									<button data-toggle="dropdown" class="btn dropdown-toggle">
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="javascript:;" class ="findPersonalTaskList">拟稿人1</a></li>
+										<li><a href="javascript:;" class ="findPersonalTaskList" >部门负责人</a></li>
+										<li><a href="javascript:;" class ="findPersonalTaskList">部门领导</a></li>
+										<li><a href="javascript:;" class ="findPersonalTaskList">其他部门</a></li>
+										<li><a href="javascript:;" class ="findPersonalTaskList" >分管领导</a></li>	
+										<li><a href="javascript:;" class ="findPersonalTaskList" >办公室1</a></li>
+										
+										<li><a href="javascript:;" class ="findPersonalTaskList">主要领导</a></li>
+										<li><a href="javascript:;" class ="findPersonalTaskList" >分管领导2</a></li>
+										<li><a href="javascript:;" class ="findPersonalTaskList">拟稿人2</a></li>
+										<li><a href="javascript:;" class ="findPersonalTaskList" >办公室2编号</a></li>
+										<li><a href="javascript:;" class ="findPersonalTaskList">发送任务</a></li>
+										<li><a href="javascript:;" class ="findPersonalTaskList">办公室3修改</a></li>
+
+									</ul>
+								</div>
+								<table class="table">
+									<thead>
+										<tr>
+											<th>任务编号</th>
+											<th>流程实例编号</th>
+											<th>任务名称</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody id="tasksByUser">
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<hr />
+						<div class="row">
+							<div class="span12">
+								
+										<h3>查看流程实例</h3>
+										<label>流程实例编号</label><input type="text"  id="procInstId"/>
+										<button class="btn selectProceInstInfo" >查询</button>
+								
+								<table class="table">
+									<thead>
+										<tr>
+											<th>流程实例编号</th>
+											<th>任务编号</th>
+											<th>任务名称</th>
+											<th>任务分配时间</th>
+											<th>任务执行人</th>
+											<th>任务结束时间</th>
+											<th>任务状态</th>
+										</tr>
+									</thead>
+									<tbody id="ProcessInstInfos">
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script
+	src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	  
+	  $.ajax({url:"/t08/historyProcessState",data:"processDefinitionId=test08:3:32510", success:function(result){
+		  console.log(result);
+		  var processInstsTable = "";
+		  
+		  var getData =  result;
+		  for(var i = 0; i <getData.length; i++){  
+		  processInstsTable+="<tr class=\"success\" >";
+		  processInstsTable+="<td>"+getData[i].id+"</td>";
+		  processInstsTable+="<td>"+getData[i].processDefinitionId+"</td>";
+		  processInstsTable+="<td>"+formatDate(getData[i].startTime)+"</td>";
+		  if(!getData[i].endTime){
+			  processInstsTable+="<td>正在执行</td>";
+		  }else{
+			  processInstsTable+="<td>已经结束</td>";
+		  }
+		  processInstsTable+="</tr>";
+		  }
+			$('#processInstsTable').html(processInstsTable);
+		}});
+
+	$(".findPersonalTaskList").on("click",function(){
+		var userName = $(this).text();
+		var quData = "userName="+userName;
+	  $.ajax({url:"/t08/findPersonalTaskList",data:quData, success:function(result){
+		  console.log(result);
+		  var tasksByUser = "";
+		  var getData =  result;
+		  for(var i = 0; i <getData.length; i++){  
+		  tasksByUser+="<tr class=\"success\" >";
+		  tasksByUser+="<td>"+getData[i].id+"</td>";
+		  tasksByUser+="<td>"+getData[i].procInstId+"</td>";
+		  tasksByUser+="<td>"+getData[i].name+"</td>";
+		  if("拟稿人1"  == getData[i].name || "部门领导" == getData[i].name || "主要领导" == getData[i].name || "拟稿人2" == getData[i].name || "分管领导2" == getData[i].name || "办公室3修改" == getData[i].name ){
+			  tasksByUser+='<td><button type="button" class="btn btn-primary " onclick="complete('+getData[i].id+', 1)">处理完成/通过</button></td>';
+		  }else if("部门负责人" == getData[i].name || "其他部门" == getData[i].name ||"分管领导" == getData[i].name  || "办公室1" == getData[i].name  || "发送任务" == getData[i].name){
+			  tasksByUser+='<td><button type="button" class="btn btn-primary " onclick="complete('+getData[i].id+', 1)" >通过</button></td>';
+			  tasksByUser+='<td><button type="button" class="btn btn-default"  onclick="complete('+getData[i].id+', 2)"  >不通过</button></td>';
+		  }else if("办公室2编号" == getData[i].name ){
+			  tasksByUser+='<td><button type="button" class="btn btn-primary " onclick="complete('+getData[i].id+', 1)" >发配分管领导补充会签</button></td>';
+			  tasksByUser+='<td><button type="button" class="btn btn-primary " onclick="complete('+getData[i].id+', 2)" >发配拟稿人补充核稿</button></td>';
+			  tasksByUser+='<td><button type="button" class="btn btn-primary " onclick="complete('+getData[i].id+', 3)" >发送任务</button></td>';
+			  tasksByUser+='<td><button type="button" class="btn btn-primary " onclick="complete('+getData[i].id+', 4)">发送拟稿人重拟</button></td>';
+		  }
+
+		  tasksByUser+="</tr>";
+		  }
+			$('#tasksByUser').html(tasksByUser);  /***/
+		}});
+  });
+
+	$('.selectProceInstInfo').on("click", function(){
+		var quData = "processInstanceId="+$('#procInstId').val();
+		 $.ajax({url:"/t08/historyTaskState",data:quData, success:function(result){
+			  console.log(result);
+			  var ProcessInstInfos = "" ;
+			  var getData =  result;
+			  for(var i = 0; i <getData.length; i++){  
+				  ProcessInstInfos+="<tr class=\"success\" >";
+				  ProcessInstInfos+="<td>"+getData[i].processInstanceId+"</td>";
+				  ProcessInstInfos+="<td>"+getData[i].id+"</td>";
+				  ProcessInstInfos+="<td>"+getData[i].name+"</td>";
+				  ProcessInstInfos+="<td>"+formatDate(getData[i].startTime)+"</td>";
+				  ProcessInstInfos+="<td>"+getData[i].assignee+"</td>";
+				  ProcessInstInfos+="<td>"+formatDate(getData[i].endTime)+"</td>";
+				  if(getData[i].endTime){
+					  ProcessInstInfos+="<td>执行完毕</td>";
+				  }else{
+					  ProcessInstInfos+="<td>等待执行</td>";
+				  }
+				  ProcessInstInfos+="</tr>";
+			  }
+				$('#ProcessInstInfos').html(ProcessInstInfos);
+	
+			
+		 }});
+  });
+
+});
+
+function complete(taskid,folw){
+	var quData = "taskId="+taskid+"&flowVar="+folw;
+	  $.ajax({url:"/t08/completeTask",data:quData, success:function(result){
+			alert("运行完成 "+taskid);
+			location.reload(true);
+		}});
+}
+function formatDate(now) { 
+	console.log(now)
+	if(!now){
+		return "无";
+	}else{
+		var now = new Date(now);
+		var year=now.getFullYear(); 
+		var month=now.getMonth()+1; 
+		var date=now.getDate(); 
+		var hour=now.getHours(); 
+		var minute=now.getMinutes(); 
+		var second=now.getSeconds(); 
+		return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
+	}
+ 
+	} 
+</script>

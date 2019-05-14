@@ -7,16 +7,20 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.activiti.engine.FormService;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
 import org.activiti.engine.form.TaskFormData;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +45,8 @@ public class Test06Controller {
 	private RuntimeService runtimeService;
 	@Autowired
 	private TaskService taskService;
-
+	@Autowired
+	private HistoryService historyService;
 	/**
 https://www.jianshu.com/p/66e336554a06
 流程附带表单提交，
@@ -71,7 +76,8 @@ https://www.jianshu.com/p/66e336554a06
 		Map<String,String> taskParams = new HashMap<String, String>();
 		taskParams.put("yesOrNo","yes");
 		formService.submitTaskFormData(task1.getId(),taskParams);
-
+		List<HistoricProcessInstance>  df = historyService.createHistoricProcessInstanceQuery().processDefinitionId(processDefinitionId).list();
+		logger.info("df={}",df);
 	}
 	/**
 	 * 启动一个流程实例
@@ -86,7 +92,7 @@ https://www.jianshu.com/p/66e336554a06
 		runtimeService.startProcessInstanceByKey(processDefinitionKey, businessKey);
 		logger.info("启动一个流程实例, {}行",JWUtil.getLineNumber());
 		logger.info("businessKey, {}",businessKey);
-		logger.info("processDefinitionKey, {}",processDefinitionKey);
+		logger.info("processDefinitionKey, {}",ToStringBuilder.reflectionToString( processDefinitionKey,ToStringStyle.DEFAULT_STYLE));
 		return true;
 	}
 

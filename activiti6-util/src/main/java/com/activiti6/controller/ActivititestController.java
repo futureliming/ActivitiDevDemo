@@ -19,6 +19,7 @@ import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.repository.DeploymentQuery;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * activiti 外部接口
@@ -46,6 +48,7 @@ public class ActivititestController {
 	// 根据用户查询正在执行的任务
 	// 根据用户查询历史任务
 	// 挂起流程
+	//	删除流程实例
 
 	@Autowired
 	private RuntimeService runtimeService;
@@ -187,77 +190,44 @@ public class ActivititestController {
 				.listPage(0, 100);// 是否是最后一个版本
 		logger.info("DeploymentQuery4 = {}", DeploymentQuery6);
 
-//		用来终止流程
-//		repositoryService.suspendProcessDefinitionById(null);
-//		给用户添加流程启动权限
-//		repositoryService.addCandidateStarterUser(processDefinitionId, userId);
-//		给组添加流程启动权限
-//		repositoryService.addCandidateStarterGroup(processDefinitionId, groupId);
-//		各种流程删除方法()
-//		repositoryService.delete...
-//		删除模型
-//		repositoryService.deleteModel(modelId);
-//		给用户删除流程启动权限
-//		repositoryService.deleteCandidateStarterUser(processDefinitionId, userId);
-//		给用户删除流程启动权限
-//		repositoryService.deleteCandidateStarterGroup(processDefinitionId, groupId);
+		//		用来终止流程
+		//		repositoryService.suspendProcessDefinitionById(null);
+		//		给用户添加流程启动权限
+		//		repositoryService.addCandidateStarterUser(processDefinitionId, userId);
+		//		给组添加流程启动权限
+		//		repositoryService.addCandidateStarterGroup(processDefinitionId, groupId);
+		//		各种流程删除方法()
+		//		repositoryService.delete...
+		//		删除模型
+		//		repositoryService.deleteModel(modelId);
+		//		给用户删除流程启动权限
+		//		repositoryService.deleteCandidateStarterUser(processDefinitionId, userId);
+		//		给用户删除流程启动权限
+		//		repositoryService.deleteCandidateStarterGroup(processDefinitionId, groupId);
 	}
 
-	/***
-	 * 获取流程实例各节点以及下一个节点
-	 */
-	@RequestMapping("/getNodes")
-	public void getNodes(HttpServletRequest request) {
-		String procInstanceId = request.getParameter("processInstanceId");
-		String processDefinitionKey = request.getParameter("processDefinitionKey");
-		// idea1 https://lvdong5830.iteye.com/blog/1584556
+	//	删除流程实例(包括正在运行的实例)的所有信息
+	@RequestMapping("/delProcessInstinct")
+	private void delProcessInstinct(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		String pricessInstId = request.getParameter("pricessInstId");
+//		判断该流程实例是否结束，未结束和结束两者删除表的信息是不一样的。
 
-		// //流程ID获取当前任务
-		List<Task> tasks1 = taskService.createTaskQuery().processInstanceId(procInstanceId).list();
-		// List<Task> tasks2 =
-		// taskService.createTaskQuery().processDefinitionKey(processDefinitionKey).list();
+		ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(pricessInstId)// 使用流程实例ID查询
+		.singleResult();
 
-		for (Task task : tasks1) {
-			// 当前任务获取当前流程的流程定义，然后根据流程定义获得所有的节点
-			ProcessDefinitionEntity def = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
-					.getDeployedProcessDefinition(task.getProcessDefinitionId());
-			// List<ActivityImpl> activitiList = def.getzz//rs是指RepositoryService的实例
-
-			// 根据任务获取当前流程执行ID，执行实例以及当前流程节点的ID
-			String excId = task.getExecutionId();
-			ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().executionId(excId)
-					.singleResult();
-			String activitiId = execution.getActivityId();
-			ActivitiActivityEventImpl a = null;
-			// ScopeImpl d = null;
-			// 然后循环activitiList 并判断出当前流程所处节点，然后得到当前节点实例，根据节点实例获取所有从当前节点出发的路径，然后根据路径获得下一个节点实例
-			// for(ActivityImpl activityImpl:activitiList){
-			// String id = activityImpl.getId();
-			// if(activitiId.equals(id)){
-			// System.out.println("当前任务："+activityImpl.getProperty("name")); //输出某个节点的某种属性
-			// List<PvmTransition> outTransitions =
-			// activityImpl.getOutgoingTransitions();//获取从某个节点出来的所有线路
-			// for(PvmTransition tr:outTransitions){
-			// PvmActivity ac = tr.getDestination(); //获取线路的终点节点
-			// System.out.println("下一步任务任务："+ac.getProperty("name"));
-			// }
-			// break;
-			// }
-			// }
+		if(pi==null){
+			//该流程实例已经完成了
+			historyService.deleteHistoricProcessInstance(pricessInstId);
+		}else{
+			//该流程实例未结束的
+			runtimeService.deleteProcessInstance(pricessInstId, "");
+			historyService.deleteHistoricProcessInstance(pricessInstId);//(顺序不能换)
 		}
+		List  df2= historyService.createHistoricProcessInstanceQuery().processInstanceId(pricessInstId).list();
+		logger.info("流程实例 = {}", df2.size()>0?"存在":"已删除");
 
-		// idea2
-		// https://liuzidong.iteye.com/blog/2378920
-		// 获取
-		HashMap map = new HashMap<String, Object>();
-		HistoricActivityInstance hai = historyService.createHistoricActivityInstanceQuery()//
-				.processInstanceId(procInstanceId)//
-				.unfinished().singleResult();
-		if (hai != null) {
-			map.put("piState", hai.getActivityName());// 流程状态
-		} else {
-			map.put("piState", "完结");// 流程状态
-		}
-		logger.info("map = {}", map);
 	}
+
+
 }
