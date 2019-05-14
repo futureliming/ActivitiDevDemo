@@ -27,9 +27,10 @@ import com.activiti6.service.MiaoService;
 import com.activiti6.util.JWUtil;
 import com.activiti6.util.ResultInfo;
 /**
- * t08测试 - t08:股权流程图例子
- * @author Bruce
- *
+ * t08测试 - t08:股权流程图例子<br/>
+ *页面设计： 展示流程实例列表,选择用户,查看用户下有什么任务,查看流程实例<br/>
+ *功能设计： 发布流程模型,创建一个流程实例,查看流程实例,查看流程任务,查询个人任务,提交任务完成.<br/>
+ * @author Bruce<br/>
  */
 @RestController
 @RequestMapping("/t08")
@@ -124,7 +125,7 @@ public class Test08Controller {
 		return  "T";
 	}
 
-	//	查询历史流程任务实例
+	//	查看流程任务
 	@GetMapping( "/historyTaskState")
 	public List<HistoricTaskInstance> queryHistoricTask(HttpServletRequest request){
 		String processInstanceBusinessKey = request.getParameter("processInstanceBusinessKey");
@@ -138,7 +139,7 @@ public class Test08Controller {
 		return reList;
 	}
 
-	//获取历史的流程模型列表 process
+	//查看流程实例
 	@GetMapping( "/historyProcessState")
 	public List<HistoricProcessInstance> HistoricProcessInstances(HttpServletRequest request){
 		//test08:3:32510
