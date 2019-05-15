@@ -2,7 +2,6 @@ com\activiti6\controller\editor\ModelSaveRestResource.class
 com\activiti6\service\UserService.class
 com\activiti6\controller\ModelerController.class
 com\activiti6\config\WebMvcConfigurer.class
-com\activiti6\ActivitiModel2Application.class
 com\activiti6\controller\ActivititestController.class
 com\activiti6\MyWebAppConfigurer.class
 com\activiti6\service\VacationFormService.class
