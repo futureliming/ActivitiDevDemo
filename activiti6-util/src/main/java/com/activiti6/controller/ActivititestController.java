@@ -24,7 +24,9 @@ import org.activiti.engine.task.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,7 +72,7 @@ public class ActivititestController {
 	 */
 	@RequestMapping("/startprocess")
 	public void startProcess(HttpServletRequest request) {
-		String path = "processes/test.bpmn";
+		String path = "processes/t09.bpmn";
 		processService.startProcess(path);
 	}
 
@@ -88,7 +90,19 @@ public class ActivititestController {
 
 		logger.info(list.toString());
 	}
+	
+    @GetMapping("/startProcessIns")
+    private boolean startProcessIns(
+            @RequestParam("businessKey") String businessKey,
+             @RequestParam("processDefiKey") String processDefiKey
+    ) {
+    	   runtimeService.startProcessInstanceByKey(processDefiKey, businessKey);
+           logger.info("启动一个流程实例");
+           logger.info("businessKey, {}", businessKey);
+           return true;
+    }
 
+    /**
 	/**
 	 * 新增流程
 	 * 
