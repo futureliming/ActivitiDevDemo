@@ -71,7 +71,7 @@ public class PageController {
 		List<HashMap<String, Object>> formsMap = new ArrayList<HashMap<String, Object>>();
 		for(VacationForm form : forms) {
 			//审核者只能看到待审核状态的请假单
-			if("领导审核".equals(form.getState())) {
+			if("审批".equals(form.getState())) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("id", form.getId());
 				map.put("title", form.getTitle());

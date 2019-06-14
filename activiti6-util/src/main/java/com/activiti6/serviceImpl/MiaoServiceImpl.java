@@ -47,19 +47,20 @@ public class MiaoServiceImpl implements MiaoService {
 		Map<String, Object> variables = new HashMap<String, Object>();
 		variables.put("employee", form.getApplicant());
 		//开始请假流程，使用formId作为流程的businessKey
-		processService.instanceByKey("myProcess", form.getId().toString(), variables);
+		processService.instanceByKey("process", form.getId().toString(), variables);
+
 		return form;
 	}
 
 	//根据选择，申请或放弃请假
 	@Override
 	public void completeProcess(String formId, String operator, String input) {
-		processService.branch(formId, "input", input);
-		if ("apply".equals(input)) {
+//		processService.branch(formId, "input", input);
+//		if ("apply".equals(input)) {
 			applyVacation(formId, operator);
-		} else {
-			giveupVacation(formId, operator);
-		}
+//		} else {
+//			giveupVacation(formId, operator);
+//		}
 	}
 
 	//放弃请假

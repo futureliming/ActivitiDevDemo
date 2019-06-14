@@ -8,9 +8,9 @@ spring:
   #数据源配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://120.79.195.71:3306/activiti_util?useUnicode=true&useSSL=false&characterEncoding=utf-8&allowMultiQueries=true
-    username: cloudmysql1
-    password: XueFengMySql-1
+    url: jdbc:mysql://47.94.8.233:3306/activiti6?useUnicode=true&useSSL=false&characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: 123456
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -28,6 +28,8 @@ spring:
       check-process-definitions: false
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: update
 logging:
   level:
     org:

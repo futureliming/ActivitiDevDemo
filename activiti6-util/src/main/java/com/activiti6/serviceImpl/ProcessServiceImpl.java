@@ -83,7 +83,7 @@ public class ProcessServiceImpl  implements ProcessService {
     public void close01(String processInstanceBusinessKey, String userId, Map<String, Object> variables){
         Task task = taskService.createTaskQuery().processInstanceBusinessKey(processInstanceBusinessKey).singleResult();
         //认领任务,成为任务的受理人
-        taskService.claim(task.getId(), userId);
+        taskService.setAssignee(task.getId(), userId);
         //完成任务
         taskService.complete(task.getId(), variables);
     }
@@ -95,9 +95,10 @@ public class ProcessServiceImpl  implements ProcessService {
     public void close02(String processInstanceBusinessKey, String userId){
         Task task = taskService.createTaskQuery().processInstanceBusinessKey(processInstanceBusinessKey).singleResult();
         //认领任务,成为任务的受理人
-        taskService.claim(task.getId(), userId);
+        taskService.setAssignee(task.getId(), userId);
         //完成任务
         taskService.complete(task.getId());
+
     }
 
     /**

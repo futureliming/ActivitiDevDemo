@@ -45,6 +45,7 @@ button {
 <script>
 	function submit() {
 		var operator = getUser();
+		alert(operator);
 		if(operator == ""){
 			location.href = "/";
 		}
@@ -67,9 +68,11 @@ button {
 		var name="userInfo=";
 		var user = "";
 		var ca = document.cookie.split(';');
+		alert(ca);
 		$.each(ca, function(i, item){
 			if(item.indexOf(name) != -1){
 				var startIndex = name.length+1;
+				//user = item.substring(startIndex,item.length);
 				user = item.substring(startIndex,item.length);
 			}    
 		});

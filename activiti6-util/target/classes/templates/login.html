@@ -46,6 +46,7 @@
 	<script type="text/javascript">
 		function login(){
 			console.log(123);
+			alert($("#username").val());
 			$.ajax({
 				url : "/login",
 				type: "POST",

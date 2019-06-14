@@ -78,6 +78,7 @@ button {
 	
 	function approve(formId){
 		var operator = getUser();
+		alert(operator);
 		debugger;
 		if(operator == ""){
 			location.href = "/";
@@ -101,6 +102,7 @@ button {
 		var name="userInfo=";
 		var user = "";
 		var ca = document.cookie.split(';');
+		alert(ca);
 		$.each(ca, function(i, item){
 			if(item.indexOf(name) != -1){
 				user = item.substring(name.length,item.length);

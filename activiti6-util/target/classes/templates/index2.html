@@ -26,7 +26,7 @@
 			<td th:text="${form.applicant}"></td>
 			<td th:text="${form.state}"></td>
 			<td>
-				<button th:if="${form.state} == '填写请假单'"
+				<button th:if="${form.state} == '请假'"
 					th:onclick="'javascript:apply(\''+${form.id}+'\')'">申请请假</button>
 				<button th:if="${form.state} == '填写请假单'"
 					th:onclick="'javascript:giveup(\''+${form.id}+'\')'">放弃请假</button>
@@ -112,6 +112,7 @@ button {
 
 	function apply(formId) {
 		var operator = getUser();
+		alert(operator)
 		if (operator == "") {
 			location.href = "/";
 		}
@@ -173,8 +174,8 @@ button {
 		var ca = document.cookie.split(';');
 		$.each(ca, function(i, item){
 			if(item.indexOf(name) != -1){
-				var startIndex = name.length+1;
-				user = item.substring(startIndex,item.length);
+				//var startIndex = name.length+1;
+				user = item.substring(name.length,item.length);
 			}
 		});
 		return user;
